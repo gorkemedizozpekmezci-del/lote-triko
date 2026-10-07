@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/favicon.png">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body data-page="kurumsal">
@@ -53,6 +55,7 @@
 
 <div id="foot"></div>
 <script src="assets/js/site.js"></script>
+<script src="assets/js/i18n.js"></script>
 <script>
 const CERTS = [
   { ad:'OEKO-TEX Sertifikası', img:'assets/belgeler/OEKO_TEX_CE.jpg',               pdf:'assets/belgeler/OEKO_TEX_CE.pdf' },
@@ -79,6 +82,8 @@ document.getElementById('certs').innerHTML = CERTS.map((c,i) => `
       </span>
     </figcaption>
   </figure>`).join('');
+
+if (window.applyI18n) window.applyI18n(document.getElementById('certs'));
 
 const lb = document.getElementById('lb');
 document.getElementById('certs').addEventListener('click', e => {

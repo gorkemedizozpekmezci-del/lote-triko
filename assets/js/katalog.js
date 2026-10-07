@@ -27,13 +27,14 @@ function renderYarnList(activeId) {
           <img class="thumb" src="${y.cone}" alt="${esc(y.name)} iplik konisi" loading="lazy">
           <span>
             <span class="nm">${esc(y.name)}${y.demo ? '<span class="tag-demo">örnek</span>' : ''}</span>
-            <span class="mt">${esc(y.count)} · ${esc(y.family)}</span>
-            <span class="pc">${n} panel</span>
+            <span class="mt">${esc(y.count)} · <span>${esc(y.family)}</span></span>
+            <span class="pc">${n} <span>panel</span></span>
           </span>
         </a>
       </li>`;
   }).join('');
-  document.getElementById('ycount').textContent = YARNS.length + ' iplik · ' + PANELS.length + ' panel';
+  document.getElementById('ycount').innerHTML =
+    YARNS.length + ' <span>iplik</span> · ' + PANELS.length + ' <span>panel</span>';
 }
 
 /* ---------- PANEL KARTI (PDF düzeni) ---------- */
@@ -73,7 +74,7 @@ function viewYarn(yarnId, seasonFilter) {
     <header class="yhero">
       <div class="pic"><img src="${y.cone}" alt="${esc(y.name)} iplik konisi"></div>
       <div>
-        <span class="kicker">İplik · ${esc(y.family)}</span>
+        <span class="kicker"><span>İplik</span> · <span>${esc(y.family)}</span></span>
         <h1>${esc(y.name)}${y.demo ? '<span class="tag-demo">örnek veri</span>' : ''}</h1>
         <p class="desc">${esc(y.note)}</p>
 
@@ -82,7 +83,7 @@ function viewYarn(yarnId, seasonFilter) {
           <li><div class="k">Panel sayısı</div><div class="v">${panelsOf(y.id).length}</div></li>
           <li><div class="k">Gauge aralığı</div><div class="v">${
             [...new Set(panelsOf(y.id).map(p => p.gauge))].join(' · ') || '—'}</div></li>
-          <li><div class="k">Renk</div><div class="v">${y.colorways.length} varyant</div></li>
+          <li><div class="k">Renk</div><div class="v">${y.colorways.length} <span>varyant</span></div></li>
         </ul>
 
         <div class="blend">
@@ -179,7 +180,7 @@ function viewSeason(season) {
     <nav class="crumb">
       <a href="index.html">Anasayfa</a><span class="sep">/</span><span>${esc(season)}</span>
     </nav>
-    <div class="grid-head"><h2>${esc(season)} — tüm paneller</h2>
+    <div class="grid-head"><h2><span>${esc(season)}</span> — <span>tüm paneller</span></h2>
       <div class="filters"><a class="chip" href="#/iplik/${YARNS[0].id}">İpliklere dön</a></div>
     </div>
     ${list.length ? `<div class="panels">${list.map(panelCard).join('')}</div>` : viewEmpty('Kayıt yok.')}
@@ -209,6 +210,7 @@ function route() {
 
   out.innerHTML = html;
   renderYarnList(activeYarn);
+  if (window.applyI18n) window.applyI18n(document.body);
 
   // seçili ipliği sol listede görünür tut
   const on = document.querySelector('.ybtn.on');

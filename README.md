@@ -42,6 +42,28 @@ Tüm birimler Nm üzerinden tanımlıdır (`UNITS` dizisi). İndirekt sistemler
 ters orantılıdır. Hank karşılıkları: pamuk 768 m, keten 274,2 m, kamgarn 512 m,
 strayhgarn 234 m.
 
+## Dil (TR / EN)
+
+Türkçe metin HTML'de kalır ve varsayılandır; İngilizce `assets/js/i18n.js`
+içindeki sözlükten gelir. Sözlükte karşılığı olmayan metin Türkçe görünür —
+eksik çeviri sayfayı bozmaz.
+
+Dil `?lang=en` ile URL'de taşınır (link paylaşılabilir) ve tarayıcıda hatırlanır.
+Sayı biçimi de dile göre değişir (8,803 / 8.803).
+
+**Yeni metin eklerken:** Türkçesini anahtar, İngilizcesini değer yaparak
+`I18N_DICT`'e bir satır ekleyin:
+
+```js
+'Yeni başlık': 'New heading',
+```
+
+Sayfa başlıkları `I18N_TITLES` içinde, sayfa dosya adıyla eşleşir.
+
+Katalog gibi sonradan çizilen içerikler için `window.applyI18n(element)`
+çağrılır — `katalog.js`, `teknik-bilgiler.html` ve `kalite-belgeleri.html`
+bunu zaten yapar.
+
 ## Katalog rotaları (hash)
 
 ```

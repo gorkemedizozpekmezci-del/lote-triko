@@ -65,7 +65,7 @@ function mountChrome() {
           </button>
           <nav class="nav">
             ${NAV.map(n => navItem(n, page)).join('')}
-            <span class="lang"><b>TR</b> / <span>EN</span></span>
+            <span class="lang"></span>
           </nav>
         </div>
       </header>`;
