@@ -620,3 +620,11 @@ p{margin:0 0 1em}
   .lang{display:flex;margin-left:auto;margin-right:14px}
   .nav.open .lang{margin:4px 0 0}
 }
+
+/* --- duyarli iki kolon (satir ici grid yerine) --- */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.two.mid{align-items:center}
+.two.wide{grid-template-columns:1.1fr .9fr;gap:48px}
+@media (max-width:860px){
+  .two,.two.wide{grid-template-columns:1fr;gap:36px}
+}

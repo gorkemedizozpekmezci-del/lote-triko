@@ -302,6 +302,7 @@ const I18N_DICT = {
   'Mesaj *': 'Message *',
   'Gönder': 'Send',
   'Lütfen yıldızlı alanları doldurun.': 'Please fill in the required fields.',
+  'Lütfen geçerli bir e-posta adresi girin.': 'Please enter a valid e-mail address.',
   'Demo form — mesaj henüz gönderilmiyor. Canlı sürümde info@lote.com.tr adresine iletilecek.':
     'Demo form — messages are not sent yet. In the live version they will go to info@lote.com.tr.',
 

@@ -130,6 +130,9 @@
 document.getElementById('f').addEventListener('submit', function (e) {
   e.preventDefault();
   const msg = document.getElementById('msg');
+  const bos = [...this.querySelectorAll('[required]')].some(el => !el.value.trim());
+  if (bos) { msg.textContent = 'Lütfen yıldızlı alanları doldurun.'; return; }
+  if (!this.eposta.checkValidity()) { msg.textContent = 'Lütfen geçerli bir e-posta adresi girin.'; return; }
   if (!this.checkValidity()) { msg.textContent = 'Lütfen yıldızlı alanları doldurun.'; return; }
   msg.textContent = 'Demo form — mesaj henüz gönderilmiyor. Canlı sürümde info@lote.com.tr adresine iletilecek.';
 });
