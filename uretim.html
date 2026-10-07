@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Üretim — Lote Triko</title>
+<meta name="description" content="Lote Triko üretim süreçleri: kapasite, makine parkuru, boyahane entegrasyonu ve sertifikalar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="uretim">
+
+<div id="head"></div>
+
+<section class="hero banner">
+  <img class="banner-bg" src="assets/banner/inner_uretim.jpg" alt="" aria-hidden="true">
+  <div class="wrap" style="grid-template-columns:1fr">
+    <div>
+      <span class="kicker">Üretim</span>
+      <h1 style="margin-bottom:14px">Güçlü geçmiş,<br>yenilikçi gelecek</h1>
+      <p>
+        2020 yılında kurulan Lote, örme giyim üretiminde uzmanlaşarak sektörde fark
+        yaratan bir marka haline gelmiştir. Yüksek kaliteli iplik üretimiyle tanınan
+        Etol Fantezi İplik'in deneyimi, üretim anlayışımızın temelini oluşturur.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:0">
+  <div class="wrap" style="padding:0">
+    <div class="stats">
+      <div><b>100.000</b><span>Aylık kapasite (adet)</span></div>
+      <div><b>50+</b><span>Makine parkuru</span></div>
+      <div><b>1</b><span>Kendi kalıp hazırlama odası</span></div>
+      <div><b>2020</b><span>Ak-Taş boyahane yatırımı</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="grid-3">
+      <div class="card">
+        <span class="num">01</span>
+        <h3>Uzmanlık ve Kalite</h3>
+        <p>Üretimin her aşamasına entegre edilen kalite anlayışımız sayesinde müşterilerimize yüksek standartlarda triko ürünler sunuyoruz.</p>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <h3>Modern Tesisler ve Kapasite</h3>
+        <p>İstanbul ve Bursa'daki tesislerimizde yaklaşık aylık 100.000 adet üretim kapasitesine sahibiz. 50'den fazla makine parkuru ve kendi bünyemizde kalıp hazırlama odası bulunmaktadır.</p>
+      </div>
+      <div class="card">
+        <span class="num">03</span>
+        <h3>Boyahane Entegrasyonu</h3>
+        <p>2020 yılında faaliyete geçen Ak-Taş Boyahanesi yatırımıyla üretim süreçlerimize hız ve esneklik kazandırdık. Renk kalitesi ve termin güvencesiyle rekabet avantajı sağlıyoruz.</p>
+      </div>
+      <div class="card">
+        <span class="num">04</span>
+        <h3>Sertifikalar</h3>
+        <p>Lote, etik ve sürdürülebilir üretimi destekleyen çeşitli uluslararası kalite sertifikalarına sahiptir.</p>
+      </div>
+      <div class="card">
+        <span class="num">05</span>
+        <h3>Müşteri Memnuniyeti</h3>
+        <p>Uzun yıllardır birçok uluslararası markayla başarılı iş birlikleri sürdürmektedir.</p>
+      </div>
+      <div class="card">
+        <span class="num">06</span>
+        <h3>Geleceği Şekillendiren Marka</h3>
+        <p>Lote; güvenilirlik, kalite ve yenilikçiliği merkeze alarak geleceğe sağlam adımlarla ilerlemektedir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="border-bottom:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Galeri</span>
+      <h2>Tesis Görselleri</h2>
+    </div>
+    <div class="gal" id="gal"></div>
+  </div>
+</section>
+
+<!-- görsel büyütme -->
+<div class="lightbox" id="lb" hidden>
+  <button class="lb-close" aria-label="Kapat">&times;</button>
+  <img id="lb-img" alt="">
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
+
+<div id="foot"></div>
+<script src="assets/js/site.js"></script>
+<script>
+const GAL = Array.from({length:10}, (_,i) => ({
+  src: 'assets/img/uretim_' + (i+1) + '.jpg',
+  ad:  'Lote Triko üretim tesisi — görsel ' + (i+1)
+}));
+document.getElementById('gal').innerHTML = GAL.map((g,i) => `
+  <button data-i="${i}" aria-label="${g.ad} görselini büyüt">
+    <img src="${g.src}" alt="${g.ad}" loading="lazy">
+  </button>`).join('');
+
+const lb = document.getElementById('lb');
+document.getElementById('gal').addEventListener('click', e => {
+  const b = e.target.closest('[data-i]'); if (!b) return;
+  const g = GAL[+b.dataset.i];
+  document.getElementById('lb-img').src = g.src;
+  document.getElementById('lb-img').alt = g.ad;
+  document.getElementById('lb-cap').textContent = g.ad;
+  lb.hidden = false; document.body.style.overflow = 'hidden';
+});
+function closeLb(){ lb.hidden = true; document.body.style.overflow = ''; }
+lb.addEventListener('click', e => { if (e.target === lb || e.target.closest('.lb-close')) closeLb(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) closeLb(); });
+</script>
+</body>
+</html>

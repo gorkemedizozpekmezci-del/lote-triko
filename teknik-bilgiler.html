@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teknik Bilgiler — İplik Numara Hesaplama ve Dönüşümü | Lote Triko</title>
+<meta name="description" content="Nm, Ne, Nf, NeL, NeK, NeW, Tex, Dtex ve Denye iplik numara hesaplama ve dönüşüm aracı.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="katalog">
+
+<div id="head"></div>
+
+<section class="hero banner">
+  <img class="banner-bg" src="assets/banner/inner_uretim.jpg" alt="" aria-hidden="true">
+  <div class="wrap" style="grid-template-columns:1fr">
+    <div>
+      <span class="kicker">Teknik Bilgiler</span>
+      <h1 style="margin-bottom:14px">İplik Numara<br>Hesaplama ve Dönüşümü</h1>
+      <p>
+        Nm, Ne, Nf, NeL, NeK, NeW, Tex, Dtex ve Denye birimlerini anında hesaplayın
+        ve birbirine dönüştürün.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 1. HESAPLAMA -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">01</span>
+      <h2>İplik Numara Hesaplama</h2>
+      <p>
+        İplik uzunluğu ve ağırlığını girerek numara değerlerini hesaplayın.
+        Özellikle üretim, iplik boyama ve kalite kontrol süreçlerinde zaman kazandırır.
+      </p>
+    </div>
+
+    <div class="calc">
+      <div class="calc-in">
+        <label><span class="k">İp Uzunluğu (cm)</span>
+          <input type="number" id="h-len" step="any" min="0" placeholder="örn. 10000"></label>
+        <label><span class="k">İp Ağırlığı (gr)</span>
+          <input type="number" id="h-wt" step="any" min="0" placeholder="örn. 11.36"></label>
+        <div class="calc-btns">
+          <button class="btn sm" id="h-go">Hesapla</button>
+          <button class="btn sm ghost" id="h-reset">Sıfırla</button>
+        </div>
+        <p class="calc-err" id="h-err"></p>
+      </div>
+      <div class="calc-out" id="h-out"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. DÖNÜŞÜM -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">02</span>
+      <h2>İplik Numara Dönüşümü</h2>
+      <p>
+        Herhangi bir alana değer girin, diğer tüm numaralar anında hesaplansın.
+        Bir alana yazdığınızda diğerleri otomatik güncellenir.
+      </p>
+    </div>
+
+    <div class="conv" id="conv"></div>
+    <div class="calc-btns" style="margin-top:20px">
+      <button class="btn sm ghost" id="c-reset">Sıfırla</button>
+    </div>
+  </div>
+</section>
+
+<!-- 3. TANIMLAR -->
+<section class="sec" style="border-bottom:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">03</span>
+      <h2>Numaralandırma Sistemleri</h2>
+      <p>
+        <b>İndirekt</b> sistemlerde numara büyüdükçe iplik incelir;
+        <b>direkt</b> sistemlerde numara büyüdükçe iplik kalınlaşır.
+      </p>
+    </div>
+    <div class="defs" id="defs"></div>
+  </div>
+</section>
+
+<div id="foot"></div>
+<script src="assets/js/site.js"></script>
+<script>
+/* --- Birimler. Hepsi Nm üzerinden tanımlanır. --- */
+const UNITS = [
+  { k:'Nm',    ad:'Metrik',              tip:'indirekt', fromNm: nm => nm,
+    tanim:'1 gram ağırlığındaki malzemenin metre cinsinden uzunluğu. İndirekt sistem, SI birimleri kullanılır. Nm = Uzunluk / Ağırlık = km/kg = m/g' },
+  { k:'Ne',    ad:'İngiliz Pamuk',       tip:'indirekt', fromNm: nm => nm * 453.59237/768.096,
+    tanim:'1 libre ağırlığındaki malzemenin Hank cinsinden uzunluğu. İndirekt sistem. 1 Hank = 840 yarda = 768 m' },
+  { k:'Nf',    ad:'Fransız',             tip:'indirekt', fromNm: nm => nm / 2,
+    tanim:'0,5 gram ağırlığındaki malzemenin metre cinsinden uzunluğu. İndirekt sistem, SI birimleri kullanılır.' },
+  { k:'NeL',   ad:'İngiliz Keten',       tip:'indirekt', fromNm: nm => nm * 453.59237/274.32,
+    tanim:'1 libre ağırlığındaki malzemenin Hank cinsinden uzunluğu. İndirekt sistem. 1 Hank = 300 yarda = 274,2 m' },
+  { k:'NeK',   ad:'İngiliz Kamgarn',     tip:'indirekt', fromNm: nm => nm * 453.59237/512.064,
+    tanim:'1 libre ağırlığındaki malzemenin Hank cinsinden uzunluğu. İndirekt sistem. 1 Hank = 560 yarda = 512 m' },
+  { k:'NeW',   ad:'İngiliz Strayhgarn',  tip:'indirekt', fromNm: nm => nm * 453.59237/234.0864,
+    tanim:'1 libre ağırlığındaki malzemenin Hank cinsinden uzunluğu. İndirekt sistem. 1 Hank = 256 yarda = 234 m' },
+  { k:'Tex',   ad:'Tex',                 tip:'direkt',   fromNm: nm => 1000 / nm,
+    tanim:'1.000 m uzunluğundaki malzemenin gram cinsinden ağırlığı. Direkt sistem, SI birimleri kullanılır. Tex = Ağırlık × 1000 / Uzunluk' },
+  { k:'Dtex',  ad:'Decitex',             tip:'direkt',   fromNm: nm => 10000 / nm,
+    tanim:'10.000 m uzunluğundaki malzemenin gram cinsinden ağırlığı. Direkt sistem, SI birimleri kullanılır. Dtex = Ağırlık × 10.000 / Uzunluk' },
+  { k:'Denye', ad:'Denye',               tip:'direkt',   fromNm: nm => 9000 / nm,
+    tanim:'9.000 m uzunluğundaki malzemenin gram cinsinden ağırlığı. Direkt sistem, SI birimleri kullanılır. Denye = Ağırlık × 9000 / Uzunluk' }
+];
+/* her birimin tersi: o birimden Nm'e */
+UNITS.forEach(u => { u.toNm = v => { const f = u.fromNm(1); return u.tip === 'direkt' ? u.fromNm(1) * 1 / v * 1 : v / f; }; });
+/* direkt birimler ters orantılı olduğu için ayrı çözüm */
+UNITS.forEach(u => {
+  if (u.tip === 'direkt') { const c = u.fromNm(1); u.toNm = v => c / v; }
+  else { const f = u.fromNm(1); u.toNm = v => v / f; }
+});
+
+const fmt = v => {
+  if (!isFinite(v) || v <= 0) return '—';
+  if (v >= 1000) return v.toLocaleString('tr-TR', { maximumFractionDigits: 0 });
+  if (v >= 100)  return v.toLocaleString('tr-TR', { maximumFractionDigits: 1 });
+  return v.toLocaleString('tr-TR', { maximumFractionDigits: 3 });
+};
+
+/* --- 1. hesaplama --- */
+const hOut = document.getElementById('h-out');
+const hErr = document.getElementById('h-err');
+function showNm(nm) {
+  hOut.innerHTML = UNITS.map(u => `
+    <div class="res">
+      <span class="rk">${u.k}</span>
+      <span class="rv">${fmt(u.fromNm(nm))}</span>
+      <span class="rt">${u.ad}</span>
+    </div>`).join('');
+}
+function hesapla() {
+  const cm = parseFloat(document.getElementById('h-len').value);
+  const g  = parseFloat(document.getElementById('h-wt').value);
+  hErr.textContent = '';
+  if (!(cm > 0) || !(g > 0)) { hErr.textContent = 'Uzunluk ve ağırlık sıfırdan büyük olmalı.'; hOut.innerHTML = ''; return; }
+  showNm((cm / 100) / g);           // Nm = metre / gram
+}
+document.getElementById('h-go').addEventListener('click', hesapla);
+document.getElementById('h-reset').addEventListener('click', () => {
+  document.getElementById('h-len').value = '';
+  document.getElementById('h-wt').value = '';
+  hOut.innerHTML = ''; hErr.textContent = '';
+});
+['h-len','h-wt'].forEach(id => document.getElementById(id)
+  .addEventListener('keydown', e => { if (e.key === 'Enter') hesapla(); }));
+
+/* --- 2. dönüşüm --- */
+document.getElementById('conv').innerHTML = UNITS.map(u => `
+  <label class="cv">
+    <span class="k">${u.k}<em>${u.ad}</em></span>
+    <input type="number" step="any" min="0" data-k="${u.k}" placeholder="0">
+  </label>`).join('');
+
+const convInputs = [...document.querySelectorAll('#conv input')];
+convInputs.forEach(inp => inp.addEventListener('input', () => {
+  const u = UNITS.find(x => x.k === inp.dataset.k);
+  const v = parseFloat(inp.value);
+  if (!(v > 0)) { convInputs.forEach(o => { if (o !== inp) o.value = ''; }); return; }
+  const nm = u.toNm(v);
+  convInputs.forEach(o => {
+    if (o === inp) return;
+    const t = UNITS.find(x => x.k === o.dataset.k);
+    const r = t.fromNm(nm);
+    o.value = isFinite(r) ? +r.toFixed(r >= 100 ? 1 : 4) : '';
+  });
+}));
+document.getElementById('c-reset').addEventListener('click', () => convInputs.forEach(i => i.value = ''));
+
+/* --- 3. tanımlar --- */
+document.getElementById('defs').innerHTML = UNITS.map(u => `
+  <div class="def">
+    <div class="def-h"><b>${u.k}</b><span class="def-tip ${u.tip}">${u.tip}</span></div>
+    <div class="def-ad">${u.ad} Numaralandırma Sistemi</div>
+    <p>${u.tanim}</p>
+  </div>`).join('');
+</script>
+</body>
+</html>

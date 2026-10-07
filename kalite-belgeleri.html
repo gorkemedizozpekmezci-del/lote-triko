@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kalite Belgeleri — Lote Triko</title>
+<meta name="description" content="Lote Triko uluslararası kalite sertifikaları: OEKO-TEX, GOTS, OCS, GRS, RCS, Better Cotton, Sedex, HIGG.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="kurumsal">
+
+<div id="head"></div>
+
+<section class="hero banner">
+  <img class="banner-bg" src="assets/banner/inner_belgeler.jpg" alt="" aria-hidden="true">
+  <div class="wrap" style="grid-template-columns:1fr">
+    <div>
+      <span class="kicker">Kurumsal</span>
+      <h1 style="margin-bottom:14px">Kalite Belgeleri</h1>
+      <p>
+        Lote Triko, müşteri memnuniyetine ve sürdürülebilir üretim ilkelerine verdiği
+        önemle triko tekstil sektöründe güvenilir bir konuma sahiptir. Kalite odaklı
+        üretim anlayışımız uluslararası sertifikalarla belgelenmiştir.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="border-bottom:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <p>
+        Üretim süreçlerimizde çevre dostu uygulamalar, yüksek kaliteli hammaddeler ve
+        yenilikçi teknolojiler kullanarak global standartlara uygun çözümler sunmaktayız.
+        Aşağıda sahip olduğumuz kalite belgelerini inceleyebilirsiniz.
+      </p>
+    </div>
+
+    <div class="certs" id="certs"></div>
+  </div>
+</section>
+
+<!-- belge büyütme -->
+<div class="lightbox" id="lb" hidden>
+  <button class="lb-close" aria-label="Kapat">&times;</button>
+  <img id="lb-img" alt="">
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
+
+<div id="foot"></div>
+<script src="assets/js/site.js"></script>
+<script>
+const CERTS = [
+  { ad:'OEKO-TEX Sertifikası', img:'assets/belgeler/OEKO_TEX_CE.jpg',               pdf:'assets/belgeler/OEKO_TEX_CE.pdf' },
+  { ad:'GOTS Sertifikası',     img:'assets/belgeler/300939_GOTS_CERTIFICATE.jpg',   pdf:'assets/belgeler/300939_GOTS_CERTIFICATE.pdf' },
+  { ad:'OCS Sertifikası',      img:'assets/belgeler/300939_OCS_CERTIFICATE.jpg',    pdf:'assets/belgeler/300939_OCS_CERTIFICATE.pdf' },
+  { ad:'GRS Sertifikası',      img:'assets/belgeler/ETOL_AKTAS_GRS_CERTIFICATE.jpg',pdf:'assets/belgeler/ETOL_AKTAS_GRS_CERTIFICATE.pdf' },
+  { ad:'RCS Sertifikası',      img:'assets/belgeler/ETOL_AKTAS_RCS_CERTIFICATE.jpg',pdf:'assets/belgeler/ETOL_AKTAS_RCS_CERTIFICATE.pdf' },
+  { ad:'Better Cotton',        img:'assets/belgeler/better_cotton.jpg' },
+  { ad:'Sedex',                img:'assets/belgeler/Sedex.jpg' },
+  { ad:'HIGG-FEM-2024',        img:'assets/belgeler/HIGG-FEM-2024.jpg' },
+  { ad:'HIGG-FSLM-2025',       img:'assets/belgeler/HIGG-FSLM-2025.jpg' }
+];
+
+document.getElementById('certs').innerHTML = CERTS.map((c,i) => `
+  <figure class="cert">
+    <button class="cert-pic" data-i="${i}" aria-label="${c.ad} belgesini büyüt">
+      <img src="${c.img}" alt="${c.ad}" loading="lazy">
+    </button>
+    <figcaption>
+      <span class="cert-ad">${c.ad}</span>
+      <span class="cert-links">
+        <button class="lnk" data-i="${i}">İncele</button>
+        ${c.pdf ? `<a class="lnk" href="${c.pdf}" target="_blank" rel="noopener">PDF</a>` : ''}
+      </span>
+    </figcaption>
+  </figure>`).join('');
+
+const lb = document.getElementById('lb');
+document.getElementById('certs').addEventListener('click', e => {
+  const b = e.target.closest('[data-i]');
+  if (!b) return;
+  const c = CERTS[+b.dataset.i];
+  document.getElementById('lb-img').src = c.img;
+  document.getElementById('lb-img').alt = c.ad;
+  document.getElementById('lb-cap').textContent = c.ad;
+  lb.hidden = false;
+  document.body.style.overflow = 'hidden';
+});
+function closeLb(){ lb.hidden = true; document.body.style.overflow = ''; }
+lb.addEventListener('click', e => { if (e.target === lb || e.target.closest('.lb-close')) closeLb(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) closeLb(); });
+</script>
+</body>
+</html>
